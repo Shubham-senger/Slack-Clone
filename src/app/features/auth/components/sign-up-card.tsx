@@ -19,7 +19,7 @@ interface signUpCardProps{
 export const SignUpCard = ({setState}: signUpCardProps) => {
 
     const {signIn} = useAuthActions();
-
+    const [name,setName] = useState("");
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -36,7 +36,7 @@ export const SignUpCard = ({setState}: signUpCardProps) => {
         }
 
         setPending(true);
-        signIn("password", {email,password,flow:"signUp"})
+        signIn("password", {name,email,password,flow:"signUp"})
             .catch(()=>{
                 setError("Password Should contain atleast 8 character 1 capital letter and a special character");
             })
@@ -71,6 +71,13 @@ export const SignUpCard = ({setState}: signUpCardProps) => {
             )}
             <CardContent className="space-y-5 px-0 pb-0">
                 <form onSubmit={onPasswordSignUp} className="space-y-2.5 ">
+                    <Input
+                        disabled = {pending}
+                        value={name}
+                        onChange={(e)=>setName(e.target.value)}
+                        placeholder="Full Name"
+                        required
+                    />
                     <Input
                         disabled = {pending}
                         value={email}
